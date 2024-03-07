@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html">
+
+	<h:head>
+		<h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+	</h:head>
+	
+	<h:body>
+		<h:form id="frmLogin">
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Usuario" styleClass="colotText"/>
+				<h:inputText id="txtUsuario" value="#{loginController.usuario}" required="true" requiredMessage="El usuario es requerido"/>
+				
+				<h:outputLabel value="Password" styleClass="colotText"/>
+				<h:inputSecret id="txtPassword" value="#{loginController.password}" required="true" requiredMessage="El password es requerido"/>
+				
+				<h:commandButton value="Ingresar" action="#{loginController.ingresar}"/>
+			</h:panelGrid>
+		</h:form>
+	</h:body>
+      
+</html>
