@@ -1,39 +1,48 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
-<title>Pantalla principal</title>
-<h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+	<title>Pantalla principal</title>
+	<h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
 </h:head>
 <h:body>
-	Bienvenido a la pantalla principal
-	
-	<h:dataTable id="tblEmpleados" var="empleado" value="#{principalController.empleados}" headerClass="headerTable" rowClasses="rowTable rowTableLine">
-		<h:column>
-			<f:facet name="header">Nombre</f:facet>
-			<h:outputText value="#{empleado.nombre}"></h:outputText>
-		</h:column>
 
-		<h:column>
-			<f:facet name="header">Apellido paterno</f:facet>
-			<h:outputText value="#{empleado.apPaterno}"></h:outputText>
-		</h:column>
-		
-		<h:column>
-			<f:facet name="header">Apellido materno</f:facet>
-			<h:outputText value="#{empleado.apMaterno}"></h:outputText>
-		</h:column>
-		
-		<h:column>
-			<f:facet name="header">Cargo</f:facet>
-			<h:outputText value="#{empleado.cargo}"></h:outputText>
-		</h:column>
-		
-		<h:column>
-			<f:facet name="header">Estatus</f:facet>
-			<h:outputText value="ACTIVO" rendered="#{empleado.estatus}"></h:outputText>
-			<h:outputText value="INACTIVO" rendered="#{!empleado.estatus}"></h:outputText>
-		</h:column>
-	</h:dataTable>
+	<p:outputLabel
+		value="Bienvenido #{sessionController.usuarioDTO.usuario} a la pantalla principal"></p:outputLabel>
+
+	<h:form>
+		<p:commandButton value="Cerrar sesión" action="#{sessionClosedController.cerrarSession}"></p:commandButton>
+		<p:dataTable id="tblEmpleados" var="empleado"
+			value="#{principalController.empleados}" paginator="true" rows="1"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+			rowsPerPageTemplate="1,2,{ShowAll|'All'}"
+			emptyMessage="No se encontraron registros"
+			filteredValue="#{principalController.empleadosFiltrados}">
+
+			<p:column headerText="Nombre" filterBy="#{empleado.apPaterno}"
+				filterMatchMode="contains" sortBy="#{empleado.apPaterno}">
+				<h:outputText value="#{empleado.nombre}"></h:outputText>
+			</p:column>
+
+			<p:column headerText="Apellido paterno">
+				<h:outputText value="#{empleado.apPaterno}"></h:outputText>
+			</p:column>
+
+			<p:column headerText="Apellido materno">
+				<h:outputText value="#{empleado.apMaterno}"></h:outputText>
+			</p:column>
+
+			<p:column headerText="Cargo">
+				<h:outputText value="#{empleado.cargo}"></h:outputText>
+			</p:column>
+
+			<p:column headerText="Estatus">
+				<h:outputText value="ACTIVO" rendered="#{empleado.estatus}"></h:outputText>
+				<h:outputText value="INACTIVO" rendered="#{!empleado.estatus}"></h:outputText>
+			</p:column>
+		</p:dataTable>
+	</h:form>
 </h:body>
 </html>
